@@ -1,0 +1,33 @@
+/* styles.css */
+
+/* Общий стиль для футера */
+footer {
+    font-size: 0.9rem;  /* Уменьшаем шрифт */
+    padding: 10px 0;  /* Меньше отступов */
+  }
+  
+  footer .container {
+    display: flex;
+    justify-content: space-between; /* Разделяем элементы */
+    align-items: center;
+  }
+  
+  footer .left, footer .right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  footer .right {
+    text-align: right;  /* Текст в правой части футера */
+  }
+  
+  footer a {
+    color: #ddd; /* Цвет ссылок */
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    color: #fff;  /* Цвет при наведении */
+  }
+  
