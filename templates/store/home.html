@@ -24,7 +24,7 @@
             <a class="nav-link active" href="#">Главная</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"></a>
+            <a class="nav-link" href="#">О нас</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Контакты</a>
@@ -62,7 +62,7 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text mb-3">Цена: {{ product.price }}₽</p>
-              <a href="#" class="btn btn-primary mt-auto">Купить</a>
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-primary mt-auto">Подробнее</a>
             </div>
           </div>
         </div>

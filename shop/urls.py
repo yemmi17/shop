@@ -3,10 +3,14 @@ from django.urls import path
 from store.views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from store import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('', views.home, name='home'),
+    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
 ]
 
 
