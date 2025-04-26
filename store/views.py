@@ -2,15 +2,11 @@ from django.shortcuts import render
 from .models import Product, Category
 
 def home(request):
-    from django.shortcuts import render
-from .models import Product, Category
-
-def home(request):
     category_id = request.GET.get('category')
     categories = Category.objects.all()
 
     if category_id:
-        products = Product.objects.filter(category_id=category_id)
+        products = Product.objects.filter(category=category_id)
     else:
         products = Product.objects.all()
 
