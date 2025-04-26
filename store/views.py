@@ -7,20 +7,22 @@ def home(request):
 
     if category_id:
         products = Product.objects.filter(category=category_id)
+        selected_category = int(category_id)
     else:
         products = Product.objects.all()
+        selected_category = None
 
     return render(request, 'store/home.html', {
         'products': products,
         'categories': categories,
-        'selected_category': int(category_id) if category_id else None
+        'selected_category': selected_category,
     })
-
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render(request, 'store/product_detail.html', {'product': product})
-
+    return render(request, 'store/product_detail.html', {
+        'product': product,
+    })
 
 def contacts(request):
     return render(request, 'store/contacts.html')
