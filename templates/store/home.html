@@ -21,11 +21,17 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Главная</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="contacts">Контакты</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">+7 (920) 930-25-25</a>
+          </li>
+          <li class="nav-item">
+            <a href="https://t.me/SimpleLifelDesign" target="_blank" class="nav-link">
+              <img src="{% static 'images/telegram.png' %}" alt="Telegram" width="25" height="25">
+            </a>
+          </li>
+          
         </ul>
       </div>
     </div>
@@ -70,13 +76,19 @@
   </div>
 
   <!-- Футер -->
-  <footer class="footer mt-auto">
-    <div class="container text-center">
-      <p class="mb-1">Цены на сайте являются примерными и не являются публичной офертой.</p>
-      <p class="mb-1">Точная цена зависит от выбранной конфигурации товара и материала.</p>
-      <p><a href="#">Политика конфиденциальности</a></p>
+  <footer class="bg-dark text-light py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <small>© 2025</small>
+      <div class="text-center text-md-start mt-3 mt-md-0">
+        <small>Цены на сайте являются примерными и не являются публичной офертой.<br>Точная цена зависит от выбранной конфигурации товара и материала.</small>
+      </div>
+      <div class="d-flex flex-column flex-md-row mt-3 mt-md-0">
+        <a href="{% url 'offer' %}" class="text-light text-decoration-none me-md-3">Публичная оферта</a>
+        <a href="{% url 'privacy_policy' %}" class="text-light text-decoration-none">Политика конфиденциальности</a>
+      </div>
     </div>
   </footer>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
