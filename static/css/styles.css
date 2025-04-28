@@ -76,4 +76,21 @@ body {
     font-weight: 600;
     margin-bottom: 1rem;
   }
+  .telegram-icon img {
+    filter: brightness(0) invert(1); /* делает изображение белым */
+    transition: 0.3s;
+  }
+  
+  .telegram-icon img:hover {
+    filter: brightness(0) invert(0.6); /* чуть затемняется при наведении */
+  }
+  .nav-link img {
+    vertical-align: middle; /* выравнивание по центру текста */
+  }
+  
+  .product-img {
+    width: 100%;
+    height: 300px; /* Можно подстроить под твой дизайн */
+    object-fit: cover; /* Обрежет лишнее, сохранит пропорции */
+  }
   

@@ -10,8 +10,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('', views.home, name='home'),
-    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
+    path('product/<int:pk>/', views.product_detail, name='product_detail'),
     path('contacts/', views.contacts, name='contacts'),
+    path('offer/', views.offer, name='offer'),
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
 ]
 
 
