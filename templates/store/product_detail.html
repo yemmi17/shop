@@ -4,77 +4,176 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{{ product.name }}</title>
+    <title>{{ product.title }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .product-gallery {
+            scrollbar-width: thin;
+            scrollbar-color: #ddd transparent;
+        }
+        .product-gallery::-webkit-scrollbar {
+            height: 6px;
+        }
+        .product-gallery::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 3px;
+        }
+        .sticky-col {
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+        }
+        .characteristics-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body style="background-color: #f8f9fa;">
 
-    <div class="container mt-5 d-flex justify-content-center">
-        <div class="card shadow p-4" style="border-radius: 20px; max-width: 1000px; width: 100%;">
-            <div class="row g-4 align-items-center">
-                <div class="col-md-6 text-center">
+<div class="container mt-4">
+    <div class="row">
+        <!-- Левая колонка (изображения) -->
+        <div class="col-lg-5 mb-4">
+            <div class="sticky-col">
+                <!-- Основное изображение -->
+                <div class="bg-white p-3 rounded-3 shadow-sm mb-3">
                     {% if product.image %}
-                        <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}" style="max-height: 500px; object-fit: cover;">
+                    <img src="{{ product.image.url }}" 
+                         class="img-fluid rounded-2" 
+                         alt="{{ product.title }}"
+                         style="max-height: 500px; width: 100%; object-fit: contain;">
                     {% else %}
-                        <img src="{% static 'default.jpg' %}" class="img-fluid rounded" alt="Нет изображения" style="max-height: 500px; object-fit: cover;">
+                    <img src="{% static 'default.jpg' %}" 
+                         class="img-fluid rounded-2" 
+                         alt="Нет изображения"
+                         style="max-height: 500px; width: 100%; object-fit: contain;">
                     {% endif %}
                 </div>
-                <div class="col-md-6">
-                    <h1>{{ product.title }}</h1>
-                    <p class="lead mt-3">{{ product.description }}</p>
-                    <h3 class="mt-4">{{ product.price|floatformat:2 }} ₽</h3>
-                    
-                    <div class="mt-4">
-                        <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#buyModal">
+
+                <!-- Галерея -->
+                {% if product.images.all %}
+                <div class="bg-white p-3 rounded-3 shadow-sm">
+                    <h6 class="mb-3 text-muted">Дополнительные фото:</h6>
+                    <div class="product-gallery d-flex gap-2 overflow-auto pb-1">
+                        {% for image in product.images.all %}
+                        <img src="{{ image.image.url }}" 
+                             class="img-thumbnail cursor-pointer flex-shrink-0"
+                             alt="Фото товара"
+                             style="width: 80px; height: 80px; object-fit: cover;"
+                             onclick="openImageModal('{{ image.image.url }}')">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Правая колонка (информация) -->
+        <div class="col-lg-7">
+            <div class="bg-white p-4 rounded-3 shadow-sm">
+                <h1 class="fw-bold mb-3">{{ product.title }}</h1>
+                <p class="lead text-muted mb-4">{{ product.description }}</p>
+
+                {% if product.characteristics.all %}
+                <div class="mb-4">
+                    <h5 class="mb-3">Характеристики:</h5>
+                    <ul class="list-group characteristics-list">
+                        {% for c in product.characteristics.all %}
+                        <li class="list-group-item border-0 ps-0 py-2">
+                            <div class="d-flex">
+                                <span class="fw-semibold me-2" style="min-width: 120px;">{{ c.name }}:</span>
+                                <span>{{ c.value }}</span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="d-flex align-items-center justify-content-between border-top pt-4">
+                    <div>
+                        <span class="text-muted">Цена:</span>
+                        <h3 class="text-success mb-0">{{ product.price|floatformat:2 }} ₽</h3>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" 
+                                class="btn btn-success px-4 py-2" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#buyModal">
                             Купить
                         </button>
-                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Назад в магазин</a>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary px-4 py-2">
+                            Назад
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-
-    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+<!-- Модальное окно покупки -->
+<div class="modal fade" id="buyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            
             <div class="modal-header">
-            <h5 class="modal-title" id="buyModalLabel">Оформить покупку</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <h5 class="modal-title">Оформить покупку</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            
             <div class="modal-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                <label for="name" class="form-label">Имя</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-                
-                <div class="mb-3">
-                <label for="phone" class="form-label">Телефон</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
-                </div>
-    
-                <div class="mb-3">
-                <label for="comment" class="form-label">Комментарий</label>
-                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-                </div>
-                
-                <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Отправить заявку</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                </div>
-            </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Имя</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Комментарий</label>
+                        <textarea class="form-control" name="comment" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Отправить заявку</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    </div>
+                </form>
             </div>
-    
-        </div>
         </div>
     </div>
+</div>
+
+<!-- Модальное окно для просмотра фото -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="fullSizeImage" src="" class="img-fluid" style="max-height: 80vh; max-width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function openImageModal(imageUrl) {
+        const fullSizeImg = document.getElementById('fullSizeImage');
+        fullSizeImg.src = imageUrl;
+        new bootstrap.Modal(document.getElementById('imageModal')).show();
+    }
+    
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            bootstrap.Modal.getInstance(this).hide();
+        }
+    });
+</script>
 </body>
 </html>
