@@ -31,9 +31,11 @@ class Order(models.Model):
     phone = models.CharField(max_length=20)
     comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_processed = models.BooleanField(default=False)  # <-- добавил
 
     def __str__(self):
         return f"Заказ от {self.name} ({self.phone}) на {self.product.title}"
+
 
 class Characteristic(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='characteristics')

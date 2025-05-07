@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Characteristic, ProductImage
+from .models import Product, Category, Characteristic, ProductImage, Order
 
 
 
@@ -15,5 +15,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'price')
     inlines = [CharacteristicInline, ProductImageInline]
 
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('name', 'product', 'created_at', 'is_processed')
+    list_filter = ('is_processed', 'created_at')
+    search_fields = ('name', 'phone')
+    list_editable = ('is_processed',)
+
+admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)

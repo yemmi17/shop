@@ -7,7 +7,7 @@ from store import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('fortunadmin/', admin.site.urls),
     path('', home, name='home'),
     path('', views.home, name='home'),
     path('product/<int:pk>/', views.product_detail, name='product_detail'),
@@ -19,3 +19,6 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = 'store.views.custom_404'

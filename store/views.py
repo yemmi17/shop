@@ -52,3 +52,7 @@ def offer(request):
 
 def privacy_policy(request):
     return render(request, 'store/privacy_policy.html')
+
+
+def custom_404(request, exception):
+    return render(request, "404.html", status=404)
