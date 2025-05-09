@@ -1,0 +1,136 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .container {
+    flex: 1;
+  }
+  
+  .navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  
+  .product-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+    background-color: #fff;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+  
+  .product-img {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-title {
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+  
+  .btn-primary {
+    background-color: #2d2d2d;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #444;
+  }
+  
+  footer.footer {
+    background-color: #fff;
+    color: #6c757d;
+    padding: 20px 0;
+    text-align: right;
+    font-size: 0.85rem;
+    border-top: 1px solid #ddd;
+    margin-top: auto;
+  }
+  
+  footer.footer a {
+    color: #6c757d;
+    text-decoration: underline;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .telegram-icon img {
+    filter: brightness(0) invert(1); /* делает изображение белым */
+    transition: 0.3s;
+  }
+  
+  .telegram-icon img:hover {
+    filter: brightness(0) invert(0.6); /* чуть затемняется при наведении */
+  }
+  .nav-link img {
+    vertical-align: middle; /* выравнивание по центру текста */
+  }
+
+  .product-img {
+    width: 100%;
+    height: 300px; /* Можно подстроить под твой дизайн */
+    object-fit: cover; /* Обрежет лишнее, сохранит пропорции */
+  }
+  .product-title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.product-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.product-characteristics h4 {
+    margin-bottom: 10px;
+}
+
+.product-characteristics ul {
+    padding-left: 0;
+}
+
+.product-characteristics li {
+    padding: 8px 12px;
+}
+/* Делаем миниатюры кликабельными */
+.cursor-pointer {
+    cursor: pointer;
+    transition: transform 0.2s; /* Плавное увеличение при наведении */
+}
+
+.cursor-pointer:hover {
+    transform: scale(1.05); /* Чуть увеличиваем при наведении */
+}
+
+/* Стили для модального окна */
+.modal-content.bg-transparent {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Белый крестик для закрытия (если фон тёмный) */
+.btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
